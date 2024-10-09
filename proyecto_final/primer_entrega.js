@@ -31,7 +31,7 @@ function ingresarAlumnos() {
   let i = 0;
 
   while (i < numeroAlumnos) {
-    let nombreCompleto = prompt("Ingrese el nombre y el apellido del alumno " + (i +1) + ":");
+    let nombreCompleto = prompt("Ingrese el nombre y el apellido del alumno " + (i + 1) + ":");
 
     let nota1 = notaValida(nombreCompleto, 1);
     let nota2 = notaValida(nombreCompleto, 2);
