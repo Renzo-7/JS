@@ -3,12 +3,12 @@
 const calcularPromedio = (nota1, nota2, nota3) => (nota1 + nota2 + nota3) / 3;
 
 function cantidadAlumnos() {
-  let numeroAlumnos = prompt("Ingrese la cantidad de alumnos a promediar. (Máximo 5) o presione 'S' para salir:");
+  let numeroAlumnos = prompt("Ingrese la cantidad de alumnos a promediar. (Máximo 10) o presione 'S' para salir:");
   
   while (numeroAlumnos.toLowerCase() !== 's') {
     numeroAlumnos = parseInt(numeroAlumnos);
     
-    if (!isNaN(numeroAlumnos) && numeroAlumnos >= 1 && numeroAlumnos <= 5) {
+    if (!isNaN(numeroAlumnos) && numeroAlumnos >= 1 && numeroAlumnos <= 10) {
       return numeroAlumnos; 
     }
 
@@ -66,6 +66,10 @@ function mostrarResultados(alumnos) {
   console.log(`Promedio General del Curso: ${promedioCurso(alumnos).toFixed(2)}`);
 }
 
+function filtrarAlumnosDesaprobados(alumnos) {
+  return alumnos.filter(alumno => clasificarPromedio(alumno.promedio) === "Desaprobado");
+}
+
 function ingresarAlumnos() {
   let numeroAlumnos = cantidadAlumnos();
   let alumnos = [];
@@ -85,6 +89,17 @@ function ingresarAlumnos() {
   }
 
   mostrarResultados(alumnos);
+
+  let alumnosDesaprobados = filtrarAlumnosDesaprobados(alumnos);
+
+  if (alumnosDesaprobados.length > 0) {
+    console.log("Alumnos desaprobados:");
+    alumnosDesaprobados.forEach(alumno => {
+      console.log(`- ${alumno.nombre} | Promedio: ${alumno.promedio.toFixed(2)}`)
+    });
+  } else {
+    console.log("Todos los alumnos aprobaron.");
+  }
 }
 
 ingresarAlumnos();
