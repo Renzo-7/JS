@@ -201,7 +201,52 @@ function actualizarPromedioClase() {
   )}`;
 }
 
+function obtenerGraduados() {
+  const url = "data.json";
+
+  fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Error al cargar la lista de graduados");
+      }
+      return response.json();
+    })
+    .then((graduados) => {
+      mostrarGraduados(graduados);
+    })
+    .catch((error) => {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: error.message,
+      });
+    });
+}
+
+function mostrarGraduados(graduados) {
+  const listaGraduados = document.getElementById("lista-graduados");
+  listaGraduados.innerHTML = "";
+
+  graduados.forEach((graduado) => {
+    const li = document.createElement("li");
+    li.classList.add("list-group-item", "list-group-item-success");
+    li.innerHTML = `
+      <strong>${graduado.nombre}</strong> - 
+      Promedio: ${graduado.promedio.toFixed(2)} 
+      (${graduado.clasificacion})
+    `;
+    listaGraduados.appendChild(li);
+  });
+
+  Swal.fire({
+    icon: "success",
+    title: "Graduados cargados",
+    text: "La lista de graduados se cargó correctamente.",
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  obtenerGraduados();
   actualizarLista();
   actualizarPromedioClase();
 });
